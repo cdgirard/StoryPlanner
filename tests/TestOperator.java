@@ -46,19 +46,19 @@ public class TestOperator
     @Test
     public void testInitialize()
     {
-//        Consent con = new Consent();
-//        
-//        Literal[] reqLiterals = {lit1, lit2};
-//        CombinedRequirement req = new CombinedRequirement(reqLiterals);
-//        
-//        // Set it up to remove lit1.
-//        
-//        Literal[] effLiterals = {lit3};
-//        CombinedEffect eff = new CombinedEffect(effLiterals);
-//        
-//        Operator op = new Operator(con,req,eff);
-//        
-//        assertEquals(req,)
+        Consent con = new Consent();
+        
+        Literal[] reqLiterals = {lit1, lit2};
+        CombinedRequirement req = new CombinedRequirement(reqLiterals);
+        
+        // Set it up to remove lit1.
+        
+        Literal[] effLiterals = {lit3};
+        CombinedEffect eff = new CombinedEffect(effLiterals);
+        
+        Operator op = new Operator(con,req,eff);
+        
+        assertEquals(req,)
     }
 
 }
