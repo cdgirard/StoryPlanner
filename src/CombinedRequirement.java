@@ -53,39 +53,10 @@ public class CombinedRequirement implements Requirement
     @Override
     public boolean requirementMet(WorldState world)
     {
+        boolean result = false;
         unbindRequirements();
-        // Pre-Test
-        boolean preTest = true;
-        for (Literal worldLit : world.getBindings())
-        {
-            boolean match = false;
-            for (Literal reqLit : m_literals)
-            {
-                if (reqLit.getID() == worldLit.getID())
-                {
-                    match = true;
-                    break;
-                }
-            }
-            if (!match)
-            {
-                preTest = false;
-                break;
-            }
-        }
-        
-        if (preTest)
-        {
-            for (Literal worldLit : world.getBindings())
-            {
-                for (Literal reqLit : m_literals)
-                {
-                    if (reqLit.match(worldLit))
-                        break;
-                }
-            }
-        }
-        return false;
+        result = Reasoner.requirementMet(this.getRequirements(), world.getBindings());
+        return result;
     }
     
     /**

@@ -59,8 +59,31 @@ public class TestLiteral
         Literal lit1 = new Literal(1);
         Actor actor1 = new Actor(1,2);
         lit1.addActor(actor1);
+        assertTrue(lit1.isBound());
         lit1.unbindActors();
         assertEquals("-1:-1",actor1.getKey());
+        assertFalse(lit1.isBound());
+    }
+    
+    @Test
+    public void testCloneLiteral()
+    {
+        Literal lit1 = new Literal(1);
+        Actor actor1 = new Actor(1,2);
+        Actor wAct2b = new Actor(2,3);
+        lit1.addActor(actor1);
+        lit1.addActor(wAct2b);
+        
+        Literal cloneLit = (Literal)lit1.clone();
+        assertTrue (cloneLit != lit1);
+        Actor[] actors1 = lit1.getActors();
+        Actor[] cloneActors = cloneLit.getActors();
+        assertEquals(actors1.length,cloneActors.length);
+        for (int i = 0;i<actors1.length;i++)
+        {
+            assertTrue(actors1[i] != cloneActors[i]);
+            assertTrue(actors1[i].equals(cloneActors[i]));
+        }
     }
     
     @Test

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Dr. Girard
  *
  */
-public class Literal
+public class Literal implements Cloneable
 {
     /**
      * How to make this more efficient like ints, but 
@@ -59,14 +59,24 @@ public class Literal
     {
         boolean same = true;
         Literal lit = (Literal)obj;
-        if (m_actors.size() != lit.getNumActors())
-            return false;
-        for (Actor a : m_actors)
+        if (m_id != lit.getID())
         {
-            if (!lit.hasActor(a))
-                return false;
+            same = false;
         }
-        return m_id == lit.getID();
+        else if (m_actors.size() != lit.getNumActors())
+        {
+            same = false;
+        }
+        else
+        {
+            same = true;
+            for (int loc=0;loc<m_actors.size() && same;loc++)
+            {
+                if (!lit.hasActor(m_actors.get(loc)))
+                    same = false;
+            }
+        }
+        return same;
     }
 
     /**
@@ -189,6 +199,45 @@ public class Literal
             }
         }
         return canMatch;
+    }
+
+    /**
+     * Returns true if all actors that are part of the Literal are bound
+     * to a concert value, false otherwise.
+     * 
+     * @return
+     */
+    public boolean isBound()
+    {
+        boolean bound = true;
+        for (Actor a : m_actors)
+        {
+            if (!a.bound())
+            {
+                bound = false;
+                break;
+            }
+        }
+        
+        return bound;
+    }
+    
+    /**
+     * Creates a copy of the Literal and the actors inside the Literal.
+     * The actors are new instances with the same type and value of
+     * the original.
+     * @return
+     */
+    @Override
+    public Object clone()
+    {
+        Literal lit = new Literal(m_id);
+        for (Actor a : m_actors)
+        {
+            Actor cloneOfA = new Actor(a.getType(),a.getValue());
+            lit.addActor(cloneOfA);
+        }
+        return lit;    
     }
 
 }
